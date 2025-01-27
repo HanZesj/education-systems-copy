@@ -1,0 +1,31 @@
+1. head interface to monitor the library, faculty, and learners.
+    - be able to view the information of a specific faculty member and be able to view in a list or individual faculty member and the list must only show the ID and the full name of the faculty member when in list only.
+    - this one does not consist of a register function. it is already set and the password is head123.
+
+2. added self-assigning feature for learner.
+    - this function will include a system that allows a learner to assign themselves to a section.
+    - the section's person capacity is capped at 40, and there are 5 sections.
+    - learner must select a section permanently.
+
+3. extension from the new feature to the faculty.
+    - the faculty member must be able to only view and delete a learner from a section that they are assigned.
+    - the faculty member must only select one section to marshal.
+    - for the view, the faculty member must be able to view the learners' full names in a list form in that specific section that the faculty member selected to marshal.
+    - for the delete, the faculty member must be able to delete/remove a learner from the specific section that the faculty member selected to marshal.
+
+4. in addition to the self-assigning feature, the selected block that the faculty selected to marshal be indicated on the blocks themselves so that the other faculty members can also see what is occupied and what is not. and each unique faculty and learner must each have a new block to select.
+
+5. the faculty member themselves can only add their desired materials in their respective registered block and must not be shared with other faculty members. and those materials must be viewable by the learners in that specific section only. and the faculty member must be able to view, edit, and delete the materials that they have added.
+
+6. make the entire program schematics to revolve around the self-assigning feature.
+    - for the faculty member, revise the functions where it must first have separate interface functions to select from, namely for learners and materials in switch case values.
+    - for the learner interface for the learners, it must first be prompted to select a section to marshal before viewing, editing, and deleting etc. the learners. and everyone in the section that the learners have selected to enter, the faculty member has full control of viewing, editing, and deleting the learners.
+
+
+7. implement a registration and login system for the faculty members and learners.
+    - the faculty member must register with their full name, email, and password.
+    - the learner must register with their full name, email, and password.
+    - the faculty member must be able to login with their email and password.
+    - the learner must be able to login with their email and password.
+
+    in addition to this, after registering for both learners and faculty they must select a block first before accessing the functions of the program.

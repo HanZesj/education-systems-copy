@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Learner {
-    private static int nextID = 1;
     private int studentID;
     private String firstName;
     private String lastName;
@@ -17,18 +16,9 @@ public class Learner {
     private int numberOfViolations;
     private final List<String> borrowedMaterials;
     private final LearnerFunctions learnerFunctions;
-    private static final List<Learner> learners = new ArrayList<>();
-
-    public static List<Learner> getLearners() {
-        return new ArrayList<>(learners);
-    }
-
-    public static void addLearner(Learner learner) {
-        learners.add(learner);
-    }
 
     public Learner(int studentID, String firstName, String lastName, String middleName, String gender, String birthday, int contactNum, String email, String address, Library library) {
-        this.studentID = nextID++;
+        this.studentID = studentID;
         this.firstName = firstName;
         this.lastName = lastName;
         this.middleName = middleName;

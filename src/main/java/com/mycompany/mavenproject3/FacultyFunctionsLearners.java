@@ -124,21 +124,23 @@ public class FacultyFunctionsLearners {
 
     public void ManageLearners() {
         while (true) {
-            System.out.println("\nManage Learners");
+            clearScreen();
+            System.out.println("---Manage Learners---");
             System.out.println("1. Edit Learner");
             System.out.println("2. Delete Learner");
-            System.out.println("3. View Learners");
-            System.out.println("4. Set Learner Violations");
-            System.out.println("5. Back to Main Menu");
+            System.out.println("3. Set Learner Violations");
+            System.out.println("4. View Learners");
+            System.out.println("5. Back to Faculty Menu");
+            
             int choice = getIntInput(":: ");
+            scanner.nextLine(); // Clear buffer
+            
             switch (choice) {
                 case 1 -> EditLearner();
                 case 2 -> DeleteLearner();
-                case 3 -> ViewLearners();
-                case 4 -> SetLearnerViolations();
-                case 5 -> {
-                    return; 
-                }
+                case 3 -> SetLearnerViolations();
+                case 4 -> ViewLearners();
+                case 5 -> { return; }
                 default -> System.out.println("Invalid choice. Please try again.");
             }
         }

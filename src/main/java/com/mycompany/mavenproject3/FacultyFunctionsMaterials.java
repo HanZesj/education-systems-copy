@@ -16,21 +16,23 @@ public class FacultyFunctionsMaterials {
 
     public void ManageMaterials() {
         while (true) {
-            System.out.println("\nManage Materials");
+            ClearScreen();
+            System.out.println("---Manage Materials---");
             System.out.println("1. Add Material");
             System.out.println("2. Edit Material");
             System.out.println("3. Delete Material");
             System.out.println("4. View Materials");
-            System.out.println("5. Back to Main Menu");
+            System.out.println("5. Back to Faculty Menu");
+            
             int choice = getIntInput(":: ");
+            scanner.nextLine(); // Clear buffer
+            
             switch (choice) {
                 case 1 -> AddMaterial();
                 case 2 -> EditMaterial();
                 case 3 -> DeleteMaterial();
                 case 4 -> ViewMaterials();
-                case 5 -> {
-                    return; // Exit the ManageMaterials loop
-                }
+                case 5 -> { return; }
                 default -> System.out.println("Invalid choice. Please try again.");
             }
         }

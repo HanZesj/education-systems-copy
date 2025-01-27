@@ -3,7 +3,7 @@ package com.mycompany.mavenproject3;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.InputMismatchException;
+import java.util.InputMismatchException; 
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
@@ -18,6 +18,8 @@ public class FacultyFunctions {
     public FacultyFunctions(Library library) {
         this.library = library;
         this.scanner = new Scanner(System.in);
+        manageLearners = new FacultyFunctionsLearners(library);
+        facultyFunctionsMaterials = new FacultyFunctionsMaterials(library);
     }
 
     private void FacultyActionsMenu() {
@@ -74,7 +76,7 @@ public class FacultyFunctions {
             String password = getPasswordInput("Enter password: ");
             
             Faculty faculty = new Faculty(library.GetNextFacultyID(), firstName, lastName, middleName, gender, 
-                                       birthday.toString(), contactNum, email, address, password, library);
+            birthday.toString(), contactNum, email, address, password, library);
             library.AddFaculty(faculty);
             
             System.out.println("Faculty added successfully.");

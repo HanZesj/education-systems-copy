@@ -1,9 +1,6 @@
 package com.mycompany.mavenproject3;
 
 public class Faculty {
-    private final FacultyFunctionsMaterials facultyFunctionsMaterials;
-    private final FacultyFunctionsLearners facultyFunctionsLearners;
-
     private final int facultyID;
     private final String firstName;
     private final String lastName;
@@ -15,8 +12,11 @@ public class Faculty {
     private final String address;
     private final String password;
     private Block assignedBlock;
+    private final Library library;
 
-    public Faculty(int facultyID, String firstName, String lastName, String middleName, String gender, String birthday, int contactNum, String email, String address, String password, Library library) {
+    public Faculty(int facultyID, String firstName, String lastName, String middleName, 
+                  String gender, String birthday, int contactNum, String email, 
+                  String address, String password, Library library) {
         this.facultyID = facultyID;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -27,9 +27,7 @@ public class Faculty {
         this.email = email;
         this.address = address;
         this.password = password;
-        this.assignedBlock = null;
-        this.facultyFunctionsMaterials = new FacultyFunctionsMaterials(library);
-        this.facultyFunctionsLearners = new FacultyFunctionsLearners(library);
+        this.library = library;
     }
 
     public int GetFacultyID() {
@@ -84,35 +82,7 @@ public class Faculty {
         return firstName + " " + middleName + " " + lastName;
     }
 
-    public void AddMaterial() {
-        facultyFunctionsMaterials.AddMaterial();
-    }
-
-    public void DeleteMaterial() {
-        facultyFunctionsMaterials.DeleteMaterial();
-    }
-
-    public void ViewMaterials() {
-        facultyFunctionsMaterials.ViewMaterials();
-    }
-
-    public void EditLearner() {
-        facultyFunctionsLearners.EditLearner();
-    }
-
-    public void DeleteLearner() {
-        facultyFunctionsLearners.DeleteLearner();
-    }
-
-    public void ViewLearners() {
-        facultyFunctionsLearners.ViewLearners();
-    }
-
-    public void SetLearnerViolations() {
-        facultyFunctionsLearners.SetLearnerViolations();
-    }
-
-    public void ManageLearners() {
-        facultyFunctionsLearners.ManageLearners();
+    public boolean CheckPassword(String password) {
+        return this.password.equals(password);
     }
 }

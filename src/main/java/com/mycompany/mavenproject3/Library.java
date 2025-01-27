@@ -8,14 +8,17 @@ public class Library {
     private final List<Learner> learners;
     private final List<Faculty> facultyMembers;
     private final List<Block> blocks;
+    private int nextFacultyID;
 
     public Library() {
         this.materials = new ArrayList<>();
         this.learners = new ArrayList<>();
         this.facultyMembers = new ArrayList<>();
         this.blocks = new ArrayList<>();
-        for(int i = 1; i<=5; i++){
-            blocks.add(new Block(i));
+        this.nextFacultyID = 1000;
+        // Add 5 blocks with default capacity of 40 students each
+        for(int i = 1; i <= 5; i++) {
+            blocks.add(new Block(i, 40));  // Changed to include capacity parameter
         }
     }
 
@@ -90,13 +93,7 @@ public class Library {
     }
 
     public int GetNextFacultyID(){
-        int lastFacultyID = 0;
-        for (Faculty faculty : facultyMembers) {
-            if (faculty.GetFacultyID() > lastFacultyID) {
-                lastFacultyID = faculty.GetFacultyID();
-            }
-        }
-        return lastFacultyID + 1;
+        return nextFacultyID++;
     }
 
     public Faculty FindFaculty(int facultyID, String password) {
