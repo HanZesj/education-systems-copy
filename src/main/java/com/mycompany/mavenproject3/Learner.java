@@ -13,11 +13,12 @@ public class Learner {
     private int contactNum;
     private String email;
     private String address;
+    private String password;
     private int numberOfViolations;
     private final List<String> borrowedMaterials;
     private final LearnerFunctions learnerFunctions;
 
-    public Learner(int studentID, String firstName, String lastName, String middleName, String gender, String birthday, int contactNum, String email, String address, Library library) {
+    public Learner(int studentID, String firstName, String lastName, String middleName, String gender, String birthday, int contactNum, String email, String address, String password, Library library) {
         this.studentID = studentID;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -27,6 +28,7 @@ public class Learner {
         this.contactNum = contactNum;
         this.email = email;
         this.address = address;
+        this.password = password;
         this.numberOfViolations = 0;
         this.borrowedMaterials = new ArrayList<>();
         this.learnerFunctions = new LearnerFunctions(library);
@@ -102,6 +104,14 @@ public class Learner {
 
     public void SetAddress(String address) {
         this.address = address;
+    }
+
+    public String GetPassword() {
+        return password;
+    }
+
+    public void SetPassword(String password) {
+        this.password = password;
     }
 
     public int GetNumberOfViolations() {

@@ -7,7 +7,7 @@ public class Block {
     private final int blockID;
     private final int capacity;
     private Faculty assignedFaculty;
-    private final List<Object> learners; // Using Object as placeholder for Learner class
+    private final List<Learner> learners;
 
     public Block(int blockID, int capacity) {
         this.blockID = blockID;
@@ -23,7 +23,7 @@ public class Block {
         return capacity;
     }
 
-    public List<Object> GetLearners() {
+    public List<Learner> GetLearners() {
         return learners;
     }
 
@@ -33,5 +33,25 @@ public class Block {
 
     public void SetFaculty(Faculty faculty) {
         this.assignedFaculty = faculty;
+    }
+
+    public boolean IsFull() {
+        return learners.size() >= capacity;
+    }
+
+    public boolean AddLearner(Learner learner) {
+        if (IsFull()) {
+            return false;
+        }
+        learners.add(learner);
+        return true;
+    }
+
+    public boolean HasLearner(Learner learner) {
+        return learners.contains(learner);
+    }
+
+    public Faculty GetAssignedFaculty() {
+        return assignedFaculty;
     }
 }

@@ -9,6 +9,7 @@ public class Library {
     private final List<Faculty> facultyMembers;
     private final List<Block> blocks;
     private int nextFacultyID;
+    private int nextBlockID = 1;
 
     public Library() {
         this.materials = new ArrayList<>();
@@ -116,6 +117,15 @@ public class Library {
         return null;
     }
 
+    public Faculty FindFacultyByID(int facultyID) {
+        for (Faculty faculty : facultyMembers) {
+            if (faculty.GetFacultyID() == facultyID) {
+                return faculty;
+            }
+        }
+        return null;
+    }
+
     // Block-related methods
     public List<Block> GetBlocks() {
         return blocks;
@@ -128,5 +138,23 @@ public class Library {
             }
         }
         return null;
+    }
+
+    public Block GetAvailableBlock() {
+        for (Block block : blocks) {
+            if (!block.IsFull()) {
+                return block;
+            }
+        }
+        return null;
+    }
+
+    public boolean IsLearnerInAnyBlock(Learner learner) {
+        for (Block block : blocks) {
+            if (block.HasLearner(learner)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

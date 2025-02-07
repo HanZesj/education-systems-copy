@@ -29,6 +29,7 @@ public class Main {
 
     private static void runMainLoop() {
         while (true) {
+            ClearScreen();
             System.out.println("Welcome to the Library Management System!");
             System.out.println("1. Faculty Interface");
             System.out.println("2. Learner Interface");

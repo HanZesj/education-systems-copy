@@ -95,7 +95,7 @@ public class FacultyFunctions {
             ClearScreen();
             System.out.println("\nFaculty Login");
             int inputFacultyID = getIntInput("Enter Faculty ID: ");
-            // Remove extra scanner.nextLine() call
+            scanner.nextLine(); // Clear buffer after numeric input
             String inputPassword = getStringInput("Enter password: ", ".+", "Password cannot be empty.");
             
             Faculty faculty = library.FindFaculty(inputFacultyID, inputPassword);

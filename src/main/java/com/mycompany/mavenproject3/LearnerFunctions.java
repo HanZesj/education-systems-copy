@@ -157,7 +157,17 @@ public class LearnerFunctions {
     public void RegisterLearner() {
         ClearScreen();
         System.out.println("\nRegister Learner");
-        scanner.nextLine();
+        
+        // Get available block first
+        Block availableBlock = library.GetAvailableBlock();
+        if (availableBlock == null) {
+            System.out.println("Sorry, all blocks are currently full. Registration is not possible at this time.");
+            System.out.println("Press enter to continue...");
+            scanner.nextLine();
+            return;
+        }
+
+        // Continue with normal registration
         String firstName = getStringInput("Enter first name: ");
         String lastName = getStringInput("Enter last name: ");
         String middleName = getStringInput("Enter middle name: ");
@@ -167,11 +177,21 @@ public class LearnerFunctions {
         scanner.nextLine();
         String email = getEmailInput("Enter email: ");
         String address = getAddressInput("Enter address: ");
-        Learner learner = new Learner(library.GetNextStudentID(), firstName, lastName, middleName, gender, birthday, contactNum, email, address, library);
-        library.AddLearner(learner);
-        System.out.println("Learner added successfully.");
-        System.out.println("Your new Student ID is: " + learner.GetStudentID());
-        System.err.println("Press enter to continue...");
+        String password = getPasswordInput("Enter password: ");
+        
+        Learner learner = new Learner(library.GetNextStudentID(), firstName, lastName, middleName, gender, birthday, contactNum, email, address, password, library);
+        
+        // Add learner to block
+        if (availableBlock.AddLearner(learner)) {
+            library.AddLearner(learner);
+            System.out.println("Learner added successfully.");
+            System.out.println("Your new Student ID is: " + learner.GetStudentID());
+            System.out.println("You have been assigned to Block " + availableBlock.GetBlockID());
+        } else {
+            System.out.println("Error: Could not add learner to block.");
+        }
+        
+        System.out.println("Press enter to continue...");
         scanner.nextLine();
     }
 
@@ -213,9 +233,13 @@ public class LearnerFunctions {
             System.out.println("Learner not found.");
             return;
         }
+        if (!library.IsLearnerInAnyBlock(learner)) {
+            System.out.println("Error: You are not assigned to any block.");
+            return;
+        }
         LoggedInLearner = learner;
         System.out.println("Login successful.");
-        setLoggedInLearner(learner); // Ensure loggedInLearner is set
+        setLoggedInLearner(learner);
         LearnerActionsMenu();
     }
 
@@ -305,6 +329,25 @@ public class LearnerFunctions {
                     String input = scanner.nextLine().trim();
                     if (!input.matches("\\d{4}[-/]\\d{2}[-/]\\d{2}")) {
                         throw new IllegalArgumentException("Birthday must be in the format YYYY-MM-DD or YYYY/MM/DD.");
+                    }
+                    return input;
+                } else {
+                    System.out.println("Error: No input available.");
+                }
+            } catch (IllegalArgumentException e) {
+                System.out.println("Error: " + e.getMessage());
+            }
+        }
+    }
+
+    private String getPasswordInput(String prompt) {
+        while (true) {
+            try {
+                System.out.print(prompt);
+                if (scanner.hasNextLine()) {
+                    String input = scanner.nextLine().trim();
+                    if (input.isEmpty()) {
+                        throw new IllegalArgumentException("Password cannot be empty.");
                     }
                     return input;
                 } else {
