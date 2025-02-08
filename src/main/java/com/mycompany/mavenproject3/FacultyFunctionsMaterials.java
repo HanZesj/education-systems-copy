@@ -8,10 +8,15 @@ import java.util.Scanner;
 public class FacultyFunctionsMaterials {
     private final Library library;
     private final Scanner scanner;
+    private Faculty loggedInFaculty;
 
     public FacultyFunctionsMaterials(Library library) {
         this.library = library;
         this.scanner = new Scanner(System.in);
+    }
+
+    public void SetLoggedInFaculty(Faculty faculty) {
+        this.loggedInFaculty = faculty;
     }
 
     public void ManageMaterials() {
@@ -40,6 +45,10 @@ public class FacultyFunctionsMaterials {
 
     public void AddMaterial() {
         ClearScreen();
+        if (loggedInFaculty == null || !loggedInFaculty.HasPrivileges()) {
+            System.out.println("Access denied. No block assignment found.");
+            return;
+        }
         try {
             System.out.println("\nAdd Material");
             scanner.nextLine();
@@ -50,6 +59,7 @@ public class FacultyFunctionsMaterials {
             int yearPublished = getIntInput("Enter year published: ");
             int copies = getIntInput("Enter number of copies: ");
             Material material = new Book(title, genre, author, publisher, yearPublished, copies);
+            loggedInFaculty.AddMaterial(material);
             library.AddMaterial(material);
             System.out.println("Material added successfully with ID: " + material.GetMaterialID());
             System.err.println("Press enter to continue...");
@@ -61,6 +71,10 @@ public class FacultyFunctionsMaterials {
 
     public void EditMaterial() {
         ClearScreen();
+        if (loggedInFaculty == null || !loggedInFaculty.HasPrivileges()) {
+            System.out.println("Access denied. No block assignment found.");
+            return;
+        }
         try {
             List<Material> materials = library.GetMaterials();
             if (materials.isEmpty()) {
@@ -102,24 +116,28 @@ public class FacultyFunctionsMaterials {
 
     public void DeleteMaterial() {
         ClearScreen();
+        if (loggedInFaculty == null || !loggedInFaculty.HasPrivileges()) {
+            System.out.println("Access denied. No block assignment found.");
+            return;
+        }
         try {
-            List<Material> materials = library.GetMaterials();
+            List<Material> materials = loggedInFaculty.GetAssignedMaterials();
             if (materials.isEmpty()) {
-                // ClearScreen();
-                System.out.println("No materials in the system yet.");
+                System.out.println("No materials in your block to delete.");
                 return;
             }
             ViewMaterials();
             System.out.println("\nDelete Material");
             int materialID = getIntInput("Enter material ID: ");
             Material material = library.FindMaterial(materialID);
-            if (material == null) {
+            if (material == null || !materials.contains(material)) {
                 // ClearScreen();
-                System.out.println("Material not found.");
+                System.out.println("Material not found in your block.");
                 System.err.println("Press enter to continue...");
                 scanner.nextLine(); // Clear the newline character
                 return;
             }
+            loggedInFaculty.RemoveMaterial(material);
             library.DeleteMaterial(materialID);
             ClearScreen();
             System.out.println("Material deleted successfully.");
@@ -132,23 +150,20 @@ public class FacultyFunctionsMaterials {
 
     public void ViewMaterials() {
         ClearScreen();
+        if (loggedInFaculty == null || !loggedInFaculty.HasPrivileges()) {
+            System.out.println("Access denied. No block assignment found.");
+            return;
+        }
         try { 
-            System.out.println("\nView Materials");
-            List<Material> materials = library.GetMaterials();
+            System.out.println("\nMaterials in Block " + loggedInFaculty.GetAssignedBlock().GetBlockID());
+            List<Material> materials = loggedInFaculty.GetAssignedMaterials();
             if (materials.isEmpty()) {
-                System.out.println("No materials in the system yet.");
+                System.out.println("No materials added to this block yet.");
                 return;
             }
             for (Material material : materials) {
-                // ClearScreen();
-                System.out.println("Material ID: " + material.GetMaterialID());
-                System.out.println("Title: " + material.GetTitle());
-                System.out.println("Genre: " + material.GetGenre());
-                System.out.println("Author: " + material.GetAuthor());
-                System.out.println("Publisher: " + material.GetPublisher());
-                System.out.println("Year Published: " + material.GetYearPublished());
-                System.out.println("Copies: " + material.GetCopies());
-                System.out.println();
+                // Display material details
+                System.out.println(material.toString());
             }
         } catch (InputMismatchException | IllegalArgumentException e) {
             System.out.println("Error viewing materials: " + e.getMessage());

@@ -12,6 +12,7 @@ public class Main {
     private static FacultyFunctionsLearners facultyFunctionsLearners;
     private static FacultyFunctions facultyFunctions;
     private static Learner LoggedInLearner;
+    private static HeadFacultyFunctions headFacultyFunctions;
 
     public static void main(String args[]) {
         initializeComponents();
@@ -21,6 +22,7 @@ public class Main {
     private static void initializeComponents() {
         scanner = new Scanner(System.in);
         library = new Library();
+        headFacultyFunctions = new HeadFacultyFunctions(library);
         learnerFunctions = new LearnerFunctions(library);
         facultyFunctionsMaterials = new FacultyFunctionsMaterials(library);
         facultyFunctionsLearners = new FacultyFunctionsLearners(library);
@@ -31,41 +33,20 @@ public class Main {
         while (true) {
             ClearScreen();
             System.out.println("Welcome to the Library Management System!");
-            System.out.println("1. Faculty Interface");
-            System.out.println("2. Learner Interface");
-            System.out.println("3. Exit");
-            System.out.print("Enter your choice: ");
+            System.out.println("1. Head Faculty Login");
+            System.out.println("2. Faculty Interface");
+            System.out.println("3. Learner Interface");
+            System.out.println("4. Exit");
             int choice = getIntInput(":: ");
             switch (choice) {
-                case 1 -> FacultyMenu();
-                case 2 -> LearnerMenu();
-                case 3 -> {
+                case 1 -> headFacultyFunctions.HeadLogin();
+                case 2 -> FacultyMenu();
+                case 3 -> LearnerMenu();
+                case 4 -> {
                     System.out.println("Exiting the program.");
-                    System.exit(0); // Terminate the program
+                    System.exit(0);
                 }
                 default -> System.out.println("Invalid choice. Please try again.");
-            }
-        }
-}
-
-    // Methods for user type selection
-    private static int GetUserType() {
-        ClearScreen();
-        while (true) {
-            System.out.println("1. Faculty member");
-            System.out.println("2. Learner");
-            System.out.println("3. Exit");
-            System.out.print("Enter user type: ");
-            int userType = getIntInput(":: ");
-            switch (userType) {
-                case 1, 2 -> {
-                    return userType;
-                }
-                case 3 -> {
-                    System.out.println("Exiting the program.");
-                    System.exit(0); // Terminate the program
-                }
-                default -> System.out.println("Invalid user type. Select Faculty member or Learner.");
             }
         }
     }

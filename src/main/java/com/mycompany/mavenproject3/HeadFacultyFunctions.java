@@ -7,7 +7,7 @@ import java.util.Scanner;
 public class HeadFacultyFunctions {
     private final Library library;
     private final Scanner scanner;
-    private static final String HEAD_PASSWORD = "head123";
+    private static final String HEAD_PASSWORD = "admin123";
 
     public HeadFacultyFunctions(Library library) {
         this.library = library;
@@ -15,16 +15,19 @@ public class HeadFacultyFunctions {
     }
 
     public void HeadLogin() {
-        System.out.print("Enter password: ");
+        ClearScreen();
+        System.out.print("Enter Head Faculty password: ");
         String password = scanner.nextLine();
         if (HEAD_PASSWORD.equals(password)) {
+            System.out.println("Login successful!");
             HeadMenu();
         } else {
-            System.out.println("Incorrect password.");
+            System.out.println("Incorrect password. Access denied.");
         }
     }
 
     private void HeadMenu() {
+        ClearScreen();
         while (true) {
             System.out.println("\n---Head Faculty Interface---");
             System.out.println("1. View All Faculty Members");
@@ -50,6 +53,7 @@ public class HeadFacultyFunctions {
     }
 
     private void ViewFacultyMembers() {
+        ClearScreen();
         List<Faculty> facultyMembers = library.GetFacultyMembers();
         if (facultyMembers.isEmpty()) {
             System.out.println("No faculty members in the system yet.");
@@ -62,6 +66,7 @@ public class HeadFacultyFunctions {
     }
 
     private void ViewFacultyAssignments() {
+        ClearScreen();
         System.out.println("\nCurrent Faculty Assignments:");
         List<Block> blocks = library.GetBlocks();
         for (Block block : blocks) {
@@ -78,6 +83,7 @@ public class HeadFacultyFunctions {
     }
 
     private void AssignFacultyToBlock() {
+        ClearScreen();
         ViewFacultyMembers();
         System.out.println("\nAssign Faculty to Block");
         
@@ -116,6 +122,7 @@ public class HeadFacultyFunctions {
     }
 
     private void RemoveFacultyFromBlock() {
+        ClearScreen();
         ViewFacultyAssignments();
         System.out.println("\nRemove Faculty from Block");
         
@@ -139,6 +146,7 @@ public class HeadFacultyFunctions {
     }
 
     private void DeleteFacultyMember() {
+        ClearScreen();
         ViewFacultyMembers();
         System.out.println("\nDelete Faculty Member");
         
@@ -173,6 +181,14 @@ public class HeadFacultyFunctions {
                 System.out.println("Error: Input must be an integer.");
                 scanner.next(); // Clear the invalid input
             }
+        }
+    }
+
+    private static void ClearScreen() {
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
+        for (int i = 0; i < 50; i++) {
+            System.out.println();
         }
     }
 }

@@ -1,5 +1,8 @@
 package com.mycompany.mavenproject3;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Faculty {
     private final int facultyID;
     private final String firstName;
@@ -13,10 +16,9 @@ public class Faculty {
     private final String password;
     private Block assignedBlock;
     private final Library library;
+    private final List<Material> assignedMaterials;
 
-    public Faculty(int facultyID, String firstName, String lastName, String middleName, 
-                  String gender, String birthday, int contactNum, String email, 
-                  String address, String password, Library library) {
+    public Faculty(int facultyID, String firstName, String lastName, String middleName, String gender, String birthday, int contactNum, String email, String address, String password, Library library) {
         this.facultyID = facultyID;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -28,6 +30,7 @@ public class Faculty {
         this.address = address;
         this.password = password;
         this.library = library;
+        this.assignedMaterials = new ArrayList<>();
     }
 
     public int GetFacultyID() {
@@ -84,5 +87,21 @@ public class Faculty {
 
     public boolean CheckPassword(String password) {
         return this.password.equals(password);
+    }
+
+    public boolean HasPrivileges() {
+        return assignedBlock != null;
+    }
+
+    public List<Material> GetAssignedMaterials() {
+        return assignedMaterials;
+    }
+
+    public void AddMaterial(Material material) {
+        assignedMaterials.add(material);
+    }
+
+    public void RemoveMaterial(Material material) {
+        assignedMaterials.remove(material);
     }
 }

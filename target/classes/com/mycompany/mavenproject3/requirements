@@ -29,3 +29,5 @@
     - the learner must be able to login with their email and password.
 
     in addition to this, after registering for both learners and faculty they must select a block first before accessing the functions of the program.
+
+    8. add a control access feature where the faculty will be promted a message to consult the head faculty first before proceeding to use the function priviledges of manipulating learners and materials. the faculty must exist in the system still and the head faculty will only grant those priviledges after registering the faculty members into a block.

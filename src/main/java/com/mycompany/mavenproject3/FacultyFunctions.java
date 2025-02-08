@@ -28,10 +28,19 @@ public class FacultyFunctions {
             return;
         }
 
+        // Pass logged in faculty to the management classes
+        manageLearners.SetLoggedInFaculty(loggedInFaculty);
+        facultyFunctionsMaterials.SetLoggedInFaculty(loggedInFaculty);
+
         ClearScreen();
         while (true) {
             try {
                 System.out.println("---Faculty Interface---");
+                if (!loggedInFaculty.HasPrivileges()) {
+                    System.out.println("\nNOTICE: Your account has limited access.");
+                    System.out.println("Please consult the Head Faculty to be assigned to a block");
+                    System.out.println("and gain full privileges.\n");
+                }
                 System.out.println("1. Manage Learners");
                 System.out.println("2. Manage Materials");
                 System.out.println("3. Back to Main Menu");
@@ -39,12 +48,20 @@ public class FacultyFunctions {
                 int choice = getIntInput(":: ");
                 switch (choice) {
                     case 1 -> {
-                        if (manageLearners != null) {
+                        if (!loggedInFaculty.HasPrivileges()) {
+                            System.out.println("Access denied. Please consult Head Faculty to be assigned to a block first.");
+                            System.out.println("Press Enter to continue...");
+                            scanner.nextLine();
+                        } else if (manageLearners != null) {
                             manageLearners.ManageLearners();
                         }
                     }
                     case 2 -> {
-                        if (facultyFunctionsMaterials != null) {
+                        if (!loggedInFaculty.HasPrivileges()) {
+                            System.out.println("Access denied. Please consult Head Faculty to be assigned to a block first.");
+                            System.out.println("Press Enter to continue...");
+                            scanner.nextLine();
+                        } else if (facultyFunctionsMaterials != null) {
                             facultyFunctionsMaterials.ManageMaterials();
                         }
                     }

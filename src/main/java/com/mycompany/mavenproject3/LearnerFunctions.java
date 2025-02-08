@@ -154,6 +154,34 @@ public class LearnerFunctions {
     }
 
     // Methods for managing learners
+    public void LearnerActionsMenu() {
+        ClearScreen();
+        while (true) {
+            System.out.println("\nWelcome " + LoggedInLearner.GetFirstName() + " " + LoggedInLearner.GetLastName());
+            System.out.println("1. View available books.");
+            System.out.println("2. Borrow a book.");
+            System.out.println("3. Return a book.");
+            System.out.println("4. View borrowed books.");
+            System.out.println("5. View violations.");
+            System.out.println("6. View your information.");
+            System.out.println("7. Logout.");
+            int choice = getIntInput(":: ");
+            switch (choice) {
+                case 1 -> ViewAvailableBooks();
+                case 2 -> BorrowBook();
+                case 3 -> ReturnBook();
+                case 4 -> ViewBorrowedBooks();
+                case 5 -> ViewViolations();
+                case 6 -> ViewLearnerInformation();
+                case 7 -> {
+                    LoggedInLearner = null;
+                    return; // Return to the main menu
+                }
+                default -> System.out.println("Invalid choice. Please try again.");
+            }
+        }
+    }
+
     public void RegisterLearner() {
         ClearScreen();
         System.out.println("\nRegister Learner");
@@ -193,34 +221,6 @@ public class LearnerFunctions {
         
         System.out.println("Press enter to continue...");
         scanner.nextLine();
-    }
-
-    public void LearnerActionsMenu() {
-        ClearScreen();
-        while (true) {
-            System.out.println("\nWelcome " + LoggedInLearner.GetFirstName() + " " + LoggedInLearner.GetLastName());
-            System.out.println("1. View available books.");
-            System.out.println("2. Borrow a book.");
-            System.out.println("3. Return a book.");
-            System.out.println("4. View borrowed books.");
-            System.out.println("5. View violations.");
-            System.out.println("6. View your information.");
-            System.out.println("7. Logout.");
-            int choice = getIntInput(":: ");
-            switch (choice) {
-                case 1 -> ViewAvailableBooks();
-                case 2 -> BorrowBook();
-                case 3 -> ReturnBook();
-                case 4 -> ViewBorrowedBooks();
-                case 5 -> ViewViolations();
-                case 6 -> ViewLearnerInformation();
-                case 7 -> {
-                    LoggedInLearner = null;
-                    return; // Return to the main menu
-                }
-                default -> System.out.println("Invalid choice. Please try again.");
-            }
-        }
     }
 
     public void LearnerLogin() {
@@ -263,7 +263,6 @@ public class LearnerFunctions {
             }
         }
     }
-
 
     private String getStringInput(String prompt) {
         while (true) {

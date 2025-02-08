@@ -7,17 +7,28 @@ import java.util.Scanner;
 public class FacultyFunctionsLearners {
     private final Library library;
     private final Scanner scanner;
+    private Faculty loggedInFaculty;
 
     public FacultyFunctionsLearners(Library library) {
         this.library = library;
         this.scanner = new Scanner(System.in);
     }
 
+    public void SetLoggedInFaculty(Faculty faculty) {
+        this.loggedInFaculty = faculty;
+    }
+
     public void EditLearner() {
         clearScreen();
-        List<Learner> learners = library.GetLearners();
+        if (loggedInFaculty == null || !loggedInFaculty.HasPrivileges()) {
+            System.out.println("Access denied. No block assignment found.");
+            return;
+        }
+
+        Block block = loggedInFaculty.GetAssignedBlock();
+        List<Learner> learners = block.GetLearners();
         if (learners.isEmpty()) {            
-            System.out.println("No learners in the system yet.");
+            System.out.println("No learners in this block.");
             return;
         }
         ViewLearners();
@@ -54,9 +65,15 @@ public class FacultyFunctionsLearners {
 
     public void DeleteLearner() {
         clearScreen();
-        List<Learner> learners = library.GetLearners();
+        if (loggedInFaculty == null || !loggedInFaculty.HasPrivileges()) {
+            System.out.println("Access denied. No block assignment found.");
+            return;
+        }
+
+        Block block = loggedInFaculty.GetAssignedBlock();
+        List<Learner> learners = block.GetLearners();
         if (learners.isEmpty()) {
-            System.out.println("No learners in the system yet.");
+            System.out.println("No learners in this block.");
             return;
         }
         ViewLearners();
@@ -77,9 +94,15 @@ public class FacultyFunctionsLearners {
 
     public void SetLearnerViolations() {
         clearScreen();
-        List<Learner> learners = library.GetLearners();
+        if (loggedInFaculty == null || !loggedInFaculty.HasPrivileges()) {
+            System.out.println("Access denied. No block assignment found.");
+            return;
+        }
+
+        Block block = loggedInFaculty.GetAssignedBlock();
+        List<Learner> learners = block.GetLearners();
         if (learners.isEmpty()) {
-            System.out.println("No learners in the system yet.");
+            System.out.println("No learners in this block.");
             return;
         }
         ViewLearners();
@@ -97,28 +120,23 @@ public class FacultyFunctionsLearners {
 
     public void ViewLearners() {
         clearScreen();
-        System.out.println("\nView Learners");
-        List<Learner> learners = library.GetLearners();
-        if (learners.isEmpty()) {
-            System.out.println("No learners in the system yet.");
+        if (loggedInFaculty == null || !loggedInFaculty.HasPrivileges()) {
+            System.out.println("Access denied. No block assignment found.");
             return;
         }
+
+        Block block = loggedInFaculty.GetAssignedBlock();
+        System.out.println("\nLearners in Block " + block.GetBlockID());
+        List<Learner> learners = block.GetLearners();
+        
+        if (learners.isEmpty()) {
+            System.out.println("No learners in this block.");
+            return;
+        }
+
         for (Learner learner : learners) {
-            System.out.println("Student ID: " + learner.GetStudentID());
-            System.out.println("Name: " + learner.GetFirstName() + " " + learner.GetLastName());
-            System.out.println("Gender: " + learner.GetGender());
-            System.out.println("Birthday: " + learner.GetBirthday());
-            System.out.println("Contact Number: " + learner.GetContactNum());
-            System.out.println("Email: " + learner.GetEmail());
-            System.out.println("Address: " + learner.GetAddress());
-            System.out.println("Number of Violations: " + learner.GetNumberOfViolations());
-            for (String materialID : learner.GetBorrowedMaterials()) {
-                Material material = library.FindMaterial(Integer.parseInt(materialID));
-                if (material != null) {
-                    System.out.println("  Borrowed Material ID: " + material.GetMaterialID() + ", Title: " + material.GetTitle());
-                }
-            }
-            System.out.println();
+            // Display learner details
+            System.out.println(learner.toString());
         }
     }
 
