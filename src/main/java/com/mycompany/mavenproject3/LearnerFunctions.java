@@ -199,6 +199,7 @@ public class LearnerFunctions {
         String firstName = getStringInput("Enter first name: ");
         String lastName = getStringInput("Enter last name: ");
         String middleName = getStringInput("Enter middle name: ");
+        scanner.nextLine();
         String gender = getStringInput("Enter gender: ");
         String birthday = getBirthdayInput("Enter birthday (YYYY-MM-DD or YYYY/MM/DD): ");
         int contactNum = getIntInput("Enter contact number: ");
@@ -215,6 +216,7 @@ public class LearnerFunctions {
             System.out.println("Learner added successfully.");
             System.out.println("Your new Student ID is: " + learner.GetStudentID());
             System.out.println("You have been assigned to Block " + availableBlock.GetBlockID());
+            System.out.println("Proceeding to block registration...");
         } else {
             System.out.println("Error: Could not add learner to block.");
         }
